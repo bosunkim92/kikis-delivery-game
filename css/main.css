@@ -1,5 +1,5 @@
 body {
-    background-image: url('/img/gameBg.jpeg');
+    background: url('/img/gameBg.jpeg') no-repeat center center fixed;
     display: flex;
     flex-direction: column;
 
@@ -25,7 +25,22 @@ body {
     left: 50%;
     transform: translateX(-50%);
 }
-/* 
-#logo, #start-game{
 
-} */
+.game-board {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -30%);
+}
+
+.card-deck {
+    width: 100px;
+    height: 150px;
+    border: 7px;
+    margin: 5px;
+    border-color: rgba(255, 255, 255, 0);
+    background-color: #ffd4f4;
+}
