@@ -92,21 +92,8 @@ let currentLocation = {
 	//when the game is newly generated, this variable needs to be updated
 };
 
-let targetList = {
-	// the target needs to be generated each time the game restarts.
-// 	first: {
-// 		people: ‘name’,
-// 	    item: ‘name’
-// 	},
-// 	second: {
-// 		people:,
-// 	    item:
-// 	},
-// 	third: {
-// 		people:,
-// 	    item:
-// 	}
-}
+// the target needs to be generated each time the game restarts.
+let targetLists = [];
 
 //let currentPlayerChoice= {
 	//when player clicks card, this variable needs to be updated
@@ -150,12 +137,10 @@ const gameBoard = document.querySelector('.game-board');
 //functions:
 
 startButton.addEventListener('click', function(e) {
-	console.log('click is working!');
 	logo.style.display = 'none';
 	startButton.style.display = 'none';
-	shuffleCard(cardDeck);
-	generateCardDeck(cardDeck);
-
+	init();
+	render();
 })
 
 
@@ -163,6 +148,8 @@ startButton.addEventListener('click', function(e) {
 
 function init() {
 	// invoke mixingCard() function when the game resets
+	shuffle(cardDeck);
+	// console.log('this is init function working');
 	// generate target by targetGenerator()
 	// invoke render()
 	// invoke successMatch() function
@@ -170,6 +157,8 @@ function init() {
 
 function render() {
 	// alter the DOM element
+	generateCardDeck(cardDeck);
+	// console.log('this is render function working');
 
 }
 
@@ -182,9 +171,9 @@ function generateCardDeck(cardDeckArr) {
 	}
 }
 
-function shuffleCard(cardDeckArr) {
+function shuffle(arr) {
 	//randomly rearrange cardDeck array- used Fisher-Yates Shuffle
-	let len = cardDeckArr.length;
+	let len = arr.length;
 	let temp;
 	let randomIdx;
 
@@ -194,12 +183,12 @@ function shuffleCard(cardDeckArr) {
 	randomIdx = Math.floor(Math.random() * len--);
 
 	//and swap it with the current (temporary) element (from the back side)
-	temp = cardDeckArr[len];
-	cardDeckArr[len] = cardDeckArr[randomIdx];
-	cardDeckArr[randomIdx] = temp; 
+	temp = arr[len];
+	arr[len] = arr[randomIdx];
+	arr[randomIdx] = temp; 
 	}
 
-	return cardDeckArr;
+	return arr;
 
 }
 
@@ -208,7 +197,18 @@ function targetGenerator() {
 	//iterate over items object and choose one item
 	//people and objects cannot be listed more than once in the targetList
 	//generates targetList
+	let deliveryTarget = Object.keys(people);
+	let deliveryItem = Object.keys(items);
 
+	shuffle(deliveryTarget);
+	shuffle(deliveryItem);
+
+	if (level === 1){
+		for(let i = 0; i < 3; i++) {
+			let idvTargetList = [deliveryTarget[i], deliveryItem[i]];
+			targetLists.push(idvTargetList);
+		}
+	}
 }
 
 function commentGenerator() {
