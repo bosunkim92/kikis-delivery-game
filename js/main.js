@@ -115,7 +115,6 @@ const landing = document.querySelector('.landing');
 const commentBox = document.querySelector('.comment-box');
 const gameBoard = document.querySelector('.game-board');
 
-// cardDeck; front and back. When the game starts, all the cardDeck should show the ‘back’ side image
 // when the player choice is matching any of targetList, then highlight (box-shadow) the cards on the DOM - this will stay showing ‘face’ side up until the next game
 // chances - (either heart or star) 
 // level
@@ -127,17 +126,6 @@ const gameBoard = document.querySelector('.game-board');
 
 //event listeners:
 
-gameBoard.addEventListener('click', function(e){
-	console.log(e.target);
-	console.log(e.target.firstElementChild);
-	e.target.firstElementChild.style.display = 'block';
-
-})
-// cardDeck -> when it’s clicked then it will trigger the matching function & winning condition
-// *extra help-icon which will generate pop-up for the reference
-
-//functions:
-
 startButton.addEventListener('click', function(e) {
 	logo.style.display = 'none';
 	startButton.style.display = 'none';
@@ -145,8 +133,28 @@ startButton.addEventListener('click', function(e) {
 	render();
 })
 
+gameBoard.addEventListener('click', function(e){
+	if(currentPlayerChoice.length < 2){
+	console.log(e.target);
+	console.log(e.target.firstElementChild);
+	e.target.firstElementChild.style.display = 'block';
+	currentPlayerChoiceGenerator(e.target);
+	successMatch();
+	//run success trys - if it is correct match, highligh divs 
+	//push correct match to matched list arr.
+	//and empty current player choice.
+	//make sure to include function that prevents opened card to be selected
+	//possibly add something like this:
+	//matchedList.some('e.target') -> skip currentPlayerChoiceGenerator();  
 
+	} else {
+		return;
+	}
+})
+// cardDeck -> when it’s clicked then it will trigger the matching function & winning condition
+// *extra help-icon which will generate pop-up for the reference
 
+//functions:
 
 function init() {
 	// invoke mixingCard() function when the game resets
@@ -163,7 +171,6 @@ function render() {
 	commentGenerator();
 	generateCardDeck(cardDeck);
 	// console.log('this is render function working');
-
 }
 
 function generateCardDeck(cardDeckArr) {
@@ -195,8 +202,6 @@ function generateCardDeck(cardDeckArr) {
 	}
 	//room for improvement: add backside image for the cards
 }
-
-
 
 function shuffle(arr) {
 	//randomly rearrange cardDeck array- used Fisher-Yates Shuffle
@@ -240,6 +245,11 @@ function targetGenerator() {
 
 function commentGenerator() {
 	//based on target generated, create comment that will be posted on the DOM
+	const kiki = document.createElement('img');
+	kiki.src = 'img/kiki.png';
+	kiki.style.width = '150px';
+	kiki.style.height = 'auto';
+	commentBox.appendChild(kiki);
 	const greeting = document.createElement('p');
 	greeting.textContent = 'Good Morning! Here are today\'s delivery lists!';
 	commentBox.appendChild(greeting);
@@ -252,9 +262,25 @@ function commentGenerator() {
 	}
 }
 
+function currentPlayerChoiceGenerator(clickedElement) {
+	let cardSelected = clickedElement.textContent;
+	// console.log(cardSelected);
+	if (currentPlayerChoice.length < 2){
+		currentPlayerChoice.push(cardSelected);
+	}
+	// console.log(currentPlayerChoice);
+}
 
 function successMatch() {
+	//the function needs to recognize the pattern...
+	if(targetLists.some(currentPlayerChoice)){
+		console.log('you have correctly delivered item to the person!');
+	} else {
+		console.log('you made wrong delivery');
+	}
+	return;
 	//if the currentPlayerChoice matches any of the targetList inner objects, push the object to the matchedList 
+	
 	// once matchedList get updated, render a image of check mark on the side of the targetList 
 		//possible code to include to render(): 
 			// let p (comment) = document.getElementById(‘comment’).textContent = `${person} needs ${item} <img scr=’/img/check.png’>`;        something like this ..
