@@ -52,8 +52,8 @@ const items = {
 		name: 'Magic Potion',
 		imgUrl: '/img/MagicPotion.png'
 	},
-	newsPaper: {
-		name: 'News Paper',
+	newspaper: {
+		name: 'Newspaper',
 		imgUrl: '/img/NewsPaper.png'
 	},
 	flowers: {
@@ -82,7 +82,7 @@ const cardDeck = ['tombo', 'ursula', 'ket',
 'osono', 'maki', 'police',
 'hamburger', 'mail', 'bread',
 'milk', 'secretDocument', 'magicPotion',
-'newsPaper', 'flowers', 'present',
+'newspaper', 'flowers', 'present',
 'toy', 'key', 'bentoBox'];
 
 
@@ -221,8 +221,8 @@ function commentGenerator() {
 	commentBox.appendChild(greeting);
 	for(elem in targetLists){
 		const deliveryList = document.createElement('p');
-		let targetListComment = `${targetLists[elem][0]} needs ${targetLists[elem][1]}`;
-		console.log(targetListComment);
+		let idvTarget = targetLists[elem]
+		let targetListComment = `${people[idvTarget[0]].name} needs ${items[idvTarget[1]].name}`;
 		deliveryList.textContent = targetListComment;
 		commentBox.appendChild(deliveryList);
 	}
