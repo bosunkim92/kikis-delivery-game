@@ -88,18 +88,14 @@ const cardDeck = ['tombo', 'ursula', 'ket',
 
 
 //define state variable:
-let currentLocation = {
-	//when the game is newly generated, this variable needs to be updated
-};
-
 // the target needs to be generated each time the game restarts.
 let targetLists = [];
 
-//let currentPlayerChoice= {
+let currentPlayerChoice= [];
 	//when player clicks card, this variable needs to be updated
 	//only one set of target (a person, an item) can be stored 
 	//once the set is correct, this value needs to be pushed(or other object method similar to array.push*) to matchedList
-//}  //is object better? or array better in this case?
+	//is object better? or array better in this case?
 
 let matchedList = {}; //starts as empty object, will be updated as the new match happens
 
@@ -131,6 +127,12 @@ const gameBoard = document.querySelector('.game-board');
 
 //event listeners:
 
+gameBoard.addEventListener('click', function(e){
+	console.log(e.target);
+	console.log(e.target.firstElementChild);
+	e.target.firstElementChild.style.display = 'block';
+
+})
 // cardDeck -> when it’s clicked then it will trigger the matching function & winning condition
 // *extra help-icon which will generate pop-up for the reference
 
@@ -167,25 +169,31 @@ function render() {
 function generateCardDeck(cardDeckArr) {
 	for(elem in cardDeckArr){
 		const cardDeckDiv = document.createElement('div');
+		cardDeckDiv.textContent = `${cardDeckArr[elem]}`;
 		cardDeckDiv.className = `card-deck ${cardDeckArr[elem]}`;
 		gameBoard.appendChild(cardDeckDiv);
 		let idvCard = cardDeckArr[elem];
 		const cardImg = document.createElement('img');
-		// let imgSrcUrl = people.tombo.imgUrl;
-		// console.log(imgSrcUrl);
+
 		function imgSrcUrl(idvCard) {
-		if (Object.keys(people).includes(idvCard)) {
-			cardImg.src = `${people[idvCard].imgUrl}`;
-		} else if (Object.keys(items).includes(idvCard)) {
-			cardImg.src = `${items[idvCard].imgUrl}`;
+			if (Object.keys(people).includes(idvCard)) {
+				cardImg.src = `${people[idvCard].imgUrl}`;
+			} else if (Object.keys(items).includes(idvCard)) {
+				cardImg.src = `${items[idvCard].imgUrl}`;
+			}
 		}
-		}
-		// cardDeckDiv.style.backgroundImage = `url('${imgSrcUrl}')`;
+
 		imgSrcUrl(idvCard);
 		const card_deck = document.querySelector(`.${idvCard}`);
 		card_deck.appendChild(cardImg)
 	}
-	// cardDeckDiv.innerText = idvCard;
+	const cardDeckImg = document.querySelectorAll('.card-deck img');
+	console.log(cardDeckImg);
+	for(elem in cardDeckImg){
+		console.log(cardDeckImg[elem]);
+		cardDeckImg[elem].style.display = 'none';
+	}
+	//room for improvement: add backside image for the cards
 }
 
 

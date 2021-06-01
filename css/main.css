@@ -44,10 +44,11 @@ body {
     width: 120px;
     height: 180px;
     border: 7px;
-    border-radius: 15%;
+    border-radius: 20%;
     margin: 10px;
     border-color: rgba(255, 255, 255, 0);
     background-color: #ffd4f4;
+
 }
 
 .card-deck img{
@@ -55,6 +56,6 @@ body {
     width: 110px;
     height: auto;
     border: thick double ivory ;
-    border-radius: 15%;
+    border-radius: 20%;
     
 }
