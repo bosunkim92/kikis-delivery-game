@@ -103,7 +103,7 @@ let targetLists = [];
 
 let matchedList = {}; //starts as empty object, will be updated as the new match happens
 
-let level; //shows current level. Once all the objects in the targetList are matched, this value will increase by 1.
+let level = 1; //shows current level. Once all the objects in the targetList are matched, this value will increase by 1.
 
 let chances; //shows how many chances left. Each time mismatch happens, this value decreases by 1.
 
@@ -117,6 +117,7 @@ let chances; //shows how many chances left. Each time mismatch happens, this val
 const startButton = document.getElementById('start-game');
 const logo = document.getElementById('logo');
 const landing = document.querySelector('.landing');
+const commentBox = document.querySelector('.comment-box');
 const gameBoard = document.querySelector('.game-board');
 
 // cardDeck; front and back. When the game starts, all the cardDeck should show the ‘back’ side image
@@ -148,6 +149,7 @@ startButton.addEventListener('click', function(e) {
 
 function init() {
 	// invoke mixingCard() function when the game resets
+	targetGenerator();
 	shuffle(cardDeck);
 	// console.log('this is init function working');
 	// generate target by targetGenerator()
@@ -157,6 +159,7 @@ function init() {
 
 function render() {
 	// alter the DOM element
+	commentGenerator();
 	generateCardDeck(cardDeck);
 	// console.log('this is render function working');
 
@@ -213,6 +216,16 @@ function targetGenerator() {
 
 function commentGenerator() {
 	//based on target generated, create comment that will be posted on the DOM
+	const greeting = document.createElement('p');
+	greeting.textContent = 'Good Morning! Here are today\'s delivery lists!';
+	commentBox.appendChild(greeting);
+	for(elem in targetLists){
+		const deliveryList = document.createElement('p');
+		let targetListComment = `${targetLists[elem][0]} needs ${targetLists[elem][1]}`;
+		console.log(targetListComment);
+		deliveryList.textContent = targetListComment;
+		commentBox.appendChild(deliveryList);
+	}
 }
 
 
@@ -230,3 +243,6 @@ function successMatch() {
 function everyTargetMatched() {
 	// check if all the matchedList targetList objects
 }
+
+
+//room for improvement = greeting comment can include player's input name;

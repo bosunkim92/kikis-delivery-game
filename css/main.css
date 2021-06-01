@@ -35,6 +35,10 @@ body {
     top: 50%;
     transform: translate(-50%, -30%);
 }
+.comment-box {
+    background-color: blue;
+    color: white;
+}
 
 .card-deck {
     width: 100px;
