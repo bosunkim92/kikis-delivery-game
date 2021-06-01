@@ -110,7 +110,6 @@ let chances; //shows how many chances left. Each time mismatch happens, this val
 
 
 
-
 //cached element reference:
 
 
@@ -166,9 +165,22 @@ function render() {
 }
 
 function generateCardDeck(cardDeckArr) {
-	for(let i = 0; i < cardDeckArr.length; i++){
+	for(elem in cardDeckArr){
 		const cardDeckDiv = document.createElement('div');
-		cardDeckDiv.innerText = cardDeckArr[i];
+		let idvCard = cardDeckArr[elem];
+		// let imgSrcUrl = people.tombo.imgUrl;
+		// console.log(imgSrcUrl);
+		// cardDeckDiv.style.backgroundImage = `url('${imgSrcUrl}')`;
+		const imgSrcUrl = () => {
+			if (Object.keys(people).includes(idvCard)) {
+				const cardImg = document.createElement('img')
+				cardDeckDiv.textContent = `<img src='${people[idvCard].imgUrl}'>${idvCard}`;
+			} else if (Object.keys(items).includes(idvCard)) {
+				cardDeckDiv.textContent = `<img src='${items[idvCard].imgUrl}'>${idvCard}`;
+			}
+		}
+		imgSrcUrl();
+		// cardDeckDiv.innerText = idvCard;
 		cardDeckDiv.className = 'card-deck';
 		gameBoard.appendChild(cardDeckDiv);
 	}
