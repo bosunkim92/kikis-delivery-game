@@ -3,78 +3,78 @@
 const people = {
 	tombo: {
 		name: 'Tombo',
-		imgUrl: '/img/Tombo.png'
+		imgUrl: 'img/Tombo.png'
 	},
 	ursula: {
 		name: 'Ursula',
-		imgUrl: '/img/Ursula.png'
+		imgUrl: 'img/Ursula.png'
 	},
 	ket: {
 		name: 'Ket',
-		imgUrl: '/img/Ket.png'
+		imgUrl: 'img/Ket.png'
 	},
 	osono: {
 		name: 'Osono',
-		imgUrl: '/img/Osono.png'
+		imgUrl: 'img/Osono.png'
 	},
 	maki: {
 		name: 'Maki',
-		imgUrl: '/img/Maki.png'
+		imgUrl: 'img/Maki.png'
 	},
 	police: {
 		name: 'Police',
-		imgUrl: '/img/Police.png'
+		imgUrl: 'img/Police.png'
 	}
 }
 
 const items = {
 	hamburger: {
 		name: 'Hamburger',
-		imgUrl: '/img/hamburger.png'
+		imgUrl: 'img/hamburger.png'
 	},
 	mail: {
 		name: 'Mail',
-		imgUrl: '/img/Mail.png'
+		imgUrl: 'img/Mail.png'
 	},
 	bread: {
 		name: 'Bread',
-		imgUrl: '/img/Bread.png'
+		imgUrl: 'img/Bread.png'
 	},
 	milk: {
 		name: 'Milk',
-		imgUrl: '/img/Milk.png'
+		imgUrl: 'img/Milk.png'
 	},
 	secretDocument: {
 		name: 'Secret Document',
-		imgUrl: '/img/SecretDocument.png'
+		imgUrl: 'img/SecretDocument.png'
 	},
 	magicPotion: {
 		name: 'Magic Potion',
-		imgUrl: '/img/MagicPotion.png'
+		imgUrl: 'img/MagicPotion.png'
 	},
 	newspaper: {
 		name: 'Newspaper',
-		imgUrl: '/img/NewsPaper.png'
+		imgUrl: 'img/NewsPaper.png'
 	},
 	flowers: {
 		name: 'Flowers',
-		imgUrl: '/img/Flowers.png'
+		imgUrl: 'img/Flowers.png'
 	},
 	present: {
 		name: 'Present',
-		imgUrl: '/img/Present.png'
+		imgUrl: 'img/Present.png'
 	},
 	toy: {
 		name: 'Toy',
-		imgUrl: '/img/Toy.png'
+		imgUrl: 'img/Toy.png'
 	},
 	key: {
 		name: 'Key',
-		imgUrl: '/img/Key.png'
+		imgUrl: 'img/Key.png'
 	},
 	bentoBox: {
 		name: 'Bento Box',
-		imgUrl: '/img/BentoBox.png'
+		imgUrl: 'img/BentoBox.png'
 	}
 }
 
@@ -167,24 +167,28 @@ function render() {
 function generateCardDeck(cardDeckArr) {
 	for(elem in cardDeckArr){
 		const cardDeckDiv = document.createElement('div');
+		cardDeckDiv.className = `card-deck ${cardDeckArr[elem]}`;
+		gameBoard.appendChild(cardDeckDiv);
 		let idvCard = cardDeckArr[elem];
+		const cardImg = document.createElement('img');
 		// let imgSrcUrl = people.tombo.imgUrl;
 		// console.log(imgSrcUrl);
-		// cardDeckDiv.style.backgroundImage = `url('${imgSrcUrl}')`;
-		const imgSrcUrl = () => {
-			if (Object.keys(people).includes(idvCard)) {
-				const cardImg = document.createElement('img')
-				cardDeckDiv.textContent = `<img src='${people[idvCard].imgUrl}'>${idvCard}`;
-			} else if (Object.keys(items).includes(idvCard)) {
-				cardDeckDiv.textContent = `<img src='${items[idvCard].imgUrl}'>${idvCard}`;
-			}
+		function imgSrcUrl(idvCard) {
+		if (Object.keys(people).includes(idvCard)) {
+			cardImg.src = `${people[idvCard].imgUrl}`;
+		} else if (Object.keys(items).includes(idvCard)) {
+			cardImg.src = `${items[idvCard].imgUrl}`;
 		}
-		imgSrcUrl();
-		// cardDeckDiv.innerText = idvCard;
-		cardDeckDiv.className = 'card-deck';
-		gameBoard.appendChild(cardDeckDiv);
+		}
+		// cardDeckDiv.style.backgroundImage = `url('${imgSrcUrl}')`;
+		imgSrcUrl(idvCard);
+		const card_deck = document.querySelector(`.${idvCard}`);
+		card_deck.appendChild(cardImg)
 	}
+	// cardDeckDiv.innerText = idvCard;
 }
+
+
 
 function shuffle(arr) {
 	//randomly rearrange cardDeck array- used Fisher-Yates Shuffle

@@ -33,7 +33,7 @@ body {
     position: fixed;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -30%);
+    transform: translate(-50%, -50%);
 }
 .comment-box {
     background-color: blue;
@@ -41,10 +41,20 @@ body {
 }
 
 .card-deck {
-    width: 100px;
-    height: 150px;
+    width: 120px;
+    height: 180px;
     border: 7px;
-    margin: 5px;
+    border-radius: 15%;
+    margin: 10px;
     border-color: rgba(255, 255, 255, 0);
     background-color: #ffd4f4;
+}
+
+.card-deck img{
+    padding: 30px 0px;
+    width: 110px;
+    height: auto;
+    border: thick double ivory ;
+    border-radius: 15%;
+    
 }
