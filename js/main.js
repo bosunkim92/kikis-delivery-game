@@ -153,12 +153,8 @@ startButton.addEventListener('click', function(e) {
 	console.log('click is working!');
 	logo.style.display = 'none';
 	startButton.style.display = 'none';
-	for(let i = 0; i < 18; i++){
-		const cardDeck = document.createElement('div');
-		cardDeck.innerText = i;
-		cardDeck.className = 'card-deck';
-		gameBoard.appendChild(cardDeck);
-	}
+	shuffleCard(cardDeck);
+	generateCardDeck(cardDeck);
 
 })
 
@@ -177,8 +173,33 @@ function render() {
 
 }
 
-function mixingCard() {
-	//randomly rearrange cardDeck array
+function generateCardDeck(cardDeckArr) {
+	for(let i = 0; i < cardDeckArr.length; i++){
+		const cardDeckDiv = document.createElement('div');
+		cardDeckDiv.innerText = cardDeckArr[i];
+		cardDeckDiv.className = 'card-deck';
+		gameBoard.appendChild(cardDeckDiv);
+	}
+}
+
+function shuffleCard(cardDeckArr) {
+	//randomly rearrange cardDeck array- used Fisher-Yates Shuffle
+	let len = cardDeckArr.length;
+	let temp;
+	let randomIdx;
+
+	//while there remain element to shuffle...
+	while(len){
+	//pick a random element's index within remaining array element
+	randomIdx = Math.floor(Math.random() * len--);
+
+	//and swap it with the current (temporary) element (from the back side)
+	temp = cardDeckArr[len];
+	cardDeckArr[len] = cardDeckArr[randomIdx];
+	cardDeckArr[randomIdx] = temp; 
+	}
+
+	return cardDeckArr;
 
 }
 
@@ -187,6 +208,7 @@ function targetGenerator() {
 	//iterate over items object and choose one item
 	//people and objects cannot be listed more than once in the targetList
 	//generates targetList
+
 }
 
 function commentGenerator() {
