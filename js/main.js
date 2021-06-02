@@ -97,7 +97,7 @@ let currentPlayerChoice= [];
 	//once the set is correct, this value needs to be pushed(or other object method similar to array.push*) to matchedList
 	//is object better? or array better in this case?
 
-let matchedList = {}; //starts as empty object, will be updated as the new match happens
+let matchedList = [[],[],[]]; //starts as empty object, will be updated as the new match happens
 
 let level = 1; //shows current level. Once all the objects in the targetList are matched, this value will increase by 1.
 
@@ -139,15 +139,16 @@ gameBoard.addEventListener('click', function(e){
 	console.log(e.target.firstElementChild);
 	e.target.firstElementChild.style.display = 'block';
 	currentPlayerChoiceGenerator(e.target);
-	successMatch();
+		if(currentPlayerChoice.length === 2){
+		successMatch();
 	//run success trys - if it is correct match, highligh divs 
 	//push correct match to matched list arr.
 	//and empty current player choice.
 	//make sure to include function that prevents opened card to be selected
 	//possibly add something like this:
 	//matchedList.some('e.target') -> skip currentPlayerChoiceGenerator();  
-
-	} else {
+		}
+ 	} else {
 		return;
 	}
 })
@@ -272,24 +273,38 @@ function currentPlayerChoiceGenerator(clickedElement) {
 }
 
 function successMatch() {
-	//the function needs to recognize the pattern...
-	if(targetLists.some(currentPlayerChoice)){
-		console.log('you have correctly delivered item to the person!');
-	} else {
-		console.log('you made wrong delivery');
+
+	for(elem of targetLists){
+		console.log(currentPlayerChoice);
+		if(elem.includes(currentPlayerChoice[0]) && elem.includes(currentPlayerChoice[1])){
+
+			matchedList[0].push(currentPlayerChoice[0]);
+			matchedList[0].push(currentPlayerChoice[1]);
+			console.log(`you have delivered correct item to person!`);
+			console.log(`this is matched List ${matchedList}`);
+		} else if(!elem.includes(currentPlayerChoice[0]) || !elem.includes(currentPlayerChoice[1])){
+			console.log(`wrong choice!`);
+
+		}
 	}
-	return;
+
+	console.log(`this is player list before delete ${currentPlayerChoice}`);
+	for(let i = 0; i < 2; i++){
+		currentPlayerChoice.pop();
+	}
+	console.log(`this is after delete ${currentPlayerChoice}`);
+}
+
 	//if the currentPlayerChoice matches any of the targetList inner objects, push the object to the matchedList 
 	
 	// once matchedList get updated, render a image of check mark on the side of the targetList 
 		//possible code to include to render(): 
 			// let p (comment) = document.getElementById(‘comment’).textContent = `${person} needs ${item} <img scr=’/img/check.png’>`;        something like this ..
 
+			
+		
 	// needs another function that checks if all the targetLis are found(matched). (array method like .every) might work … but will that work the same way to object? 
 	// need another function that controls  
-	
-}
-
 function everyTargetMatched() {
 	// check if all the matchedList targetList objects
 }
