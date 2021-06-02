@@ -97,7 +97,7 @@ let currentPlayerChoice= [];
 	//once the set is correct, this value needs to be pushed(or other object method similar to array.push*) to matchedList
 	//is object better? or array better in this case?
 
-let matchedList = [[],[],[]]; //starts as empty object, will be updated as the new match happens
+let matchedList = []; //starts as empty object, will be updated as the new match happens
 
 let level = 1; //shows current level. Once all the objects in the targetList are matched, this value will increase by 1.
 
@@ -134,6 +134,9 @@ startButton.addEventListener('click', function(e) {
 })
 
 gameBoard.addEventListener('click', function(e){
+	if(matchedList.length === targetLists.length){
+		levelUp();
+	}
 	if(currentPlayerChoice.length < 2){
 	console.log(e.target);
 	console.log(e.target.firstElementChild);
@@ -141,6 +144,7 @@ gameBoard.addEventListener('click', function(e){
 	currentPlayerChoiceGenerator(e.target);
 		if(currentPlayerChoice.length === 2){
 		successMatch();
+		console.log(`this is current length of matchedList ${matchedList.length}`);
 	//run success trys - if it is correct match, highligh divs 
 	//push correct match to matched list arr.
 	//and empty current player choice.
@@ -236,7 +240,7 @@ function targetGenerator() {
 	shuffle(deliveryTarget);
 	shuffle(deliveryItem);
 
-	if (level === 1){
+	if (level >= 1){
 		for(let i = 0; i < 3; i++) {
 			let idvTargetList = [deliveryTarget[i], deliveryItem[i]];
 			targetLists.push(idvTargetList);
@@ -274,15 +278,15 @@ function currentPlayerChoiceGenerator(clickedElement) {
 
 function successMatch() {
 
-	for(elem of targetLists){
-		console.log(currentPlayerChoice);
-		if(elem.includes(currentPlayerChoice[0]) && elem.includes(currentPlayerChoice[1])){
-
-			matchedList[0].push(currentPlayerChoice[0]);
-			matchedList[0].push(currentPlayerChoice[1]);
+	for(elem in targetLists){
+		let idvTargetList = targetLists[elem];
+		if(idvTargetList.includes(currentPlayerChoice[0]) && idvTargetList.includes(currentPlayerChoice[1])){
+			matchedList.push([]);
+			matchedList[elem].push(currentPlayerChoice[0]);
+			matchedList[elem].push(currentPlayerChoice[1]);
 			console.log(`you have delivered correct item to person!`);
 			console.log(`this is matched List ${matchedList}`);
-		} else if(!elem.includes(currentPlayerChoice[0]) || !elem.includes(currentPlayerChoice[1])){
+		} else if(!idvTargetList.includes(currentPlayerChoice[0]) || !idvTargetList.includes(currentPlayerChoice[1])){
 			console.log(`wrong choice!`);
 
 		}
@@ -305,8 +309,10 @@ function successMatch() {
 		
 	// needs another function that checks if all the targetLis are found(matched). (array method like .every) might work … but will that work the same way to object? 
 	// need another function that controls  
-function everyTargetMatched() {
+function levelUp() {
 	// check if all the matchedList targetList objects
+	level++;
+	alert(`now your level is ${level}`);
 }
 
 
