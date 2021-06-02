@@ -121,10 +121,6 @@ startButton.addEventListener('click', function(e) {
 
 gameBoard.addEventListener('click', function(e){
 	if(e.target.className !== 'game-board'){
-		// if(matchedList.length === targetLists.length){
-		// 	levelUp();
-		// 	return;
-		// }
 		if(currentPlayerChoice.length < 2){
 			console.log(e.target);
 			console.log(e.target.firstElementChild);
@@ -186,10 +182,8 @@ function generateCardDeck(cardDeckArr) {
 		card_deck.appendChild(cardImg)
 	}
 	const cardDeckImg = document.querySelectorAll('.card-deck img');
-	console.log(cardDeckImg);
-	for(elem in cardDeckImg){
-		console.log(cardDeckImg[elem]);
-		cardDeckImg[elem].style.display = 'none';
+	for(elem of cardDeckImg){
+		elem.style.display = 'none';
 	}
 	//room for improvement: add backside image for the cards
 }
@@ -255,8 +249,17 @@ function commentGenerator() {
 	currentLevel.textContent = `Level: ${level}`;
 	commentBox.appendChild(currentLevel);
 	const currentChances = document.createElement('h2');
-	currentChances.textContent = `Try: ${chances}`;
 	commentBox.appendChild(currentChances);
+	const currentChancesImg = document.querySelector('h2');
+	for(let i = 0; i < chances; i++){
+		const heartColumn = document.createElement('div');
+		heartColumn.className = 'hearts-column';
+		currentChancesImg.appendChild(heartColumn); 
+		const heartImg = document.createElement('img');
+		heartImg.className = 'hearts';
+		heartImg.src = 'img/heart.png';
+		heartColumn.appendChild(heartImg);
+	}
 }
 
 function currentPlayerChoiceGenerator(clickedElement) {
@@ -277,7 +280,7 @@ function successMatch() {
 			for(elem of currentPlayerChoice){
 				let eachCard = document.querySelector(`.${elem}`);
 				console.log(eachCard);
-				eachCard.firstElementChild.style.borderColor = 'green';
+				eachCard.firstElementChild.style.boxShadow = '0px 0px 4px 6px rgba(0, 255, 98, 0.9)';
 			}
 			console.log(`you have delivered correct item to person!`);
 			console.log(`this is matched List ${matchedList}`);
@@ -290,15 +293,15 @@ function successMatch() {
 		console.log('it is in the failure handler function');
 		setTimeout(function(){
 			chances--;
-			let updateChances = document.querySelector('h2')
-			updateChances.textContent = `Try: ${chances}`;
+			let updateChances = document.querySelector('h2');
+			updateChances.removeChild(updateChances.firstChild);
 			for(elem of currentPlayerChoice){
 				console.log(`this should only appear after the failed try ${elem}`);
 				let firstEl = document.querySelector(`.${elem}`).firstElementChild;
 				console.log(`this should have <img>tag of failed try ${firstEl}`);
 				firstEl.style.display = 'none';
 			}			
-		}, 500);
+		}, 300);
 	}
 //clearing memory of currentPlayerChoice after each set of cards selection
 	setTimeout(function(){
@@ -309,14 +312,14 @@ function successMatch() {
 			}
 			console.log(`this is after delete ${currentPlayerChoice}`);
 		}
-	}, 1000);
+	}, 500);
 
 	setTimeout(function(){
 		if(matchedList.length === targetLists.length){
 			levelUp();
 			return;
 		}
-	}, 1500);
+	}, 1000);
 }
 
 	// once matchedList get updated, render a image of check mark on the side of the targetList 
@@ -332,6 +335,8 @@ function levelUp() {
 	level++;
 	let updateLevel = document.querySelector('h3');
 	updateLevel.textContent = `Level: ${level}`;
+	successNumber = 0;
+	matchedList = [];
 	alert(`You have successfully delivered all items to the neighbors! Now your level is ${level}`);
 	init();
 }
