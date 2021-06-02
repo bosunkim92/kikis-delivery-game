@@ -99,6 +99,8 @@ let currentPlayerChoice= [];
 
 let matchedList = []; //starts as empty object, will be updated as the new match happens
 
+let successNumber;
+
 let level = 1; //shows current level. Once all the objects in the targetList are matched, this value will increase by 1.
 
 let chances; //shows how many chances left. Each time mismatch happens, this value decreases by 1.
@@ -134,27 +136,34 @@ startButton.addEventListener('click', function(e) {
 })
 
 gameBoard.addEventListener('click', function(e){
-	if(matchedList.length === targetLists.length){
-		levelUp();
-	}
-	if(currentPlayerChoice.length < 2){
-	console.log(e.target);
-	console.log(e.target.firstElementChild);
-	e.target.firstElementChild.style.display = 'block';
-	currentPlayerChoiceGenerator(e.target);
+	if(e.target.className !== 'game-board'){
+		if(matchedList.length === targetLists.length){
+			levelUp();
+			return;
+		}
+		if(currentPlayerChoice.length < 2){
+		console.log(e.target);
+		console.log(e.target.firstElementChild);
+		e.target.firstElementChild.style.display = 'block';
+		currentPlayerChoiceGenerator(e.target);
 		if(currentPlayerChoice.length === 2){
 		successMatch();
 		console.log(`this is current length of matchedList ${matchedList.length}`);
-	//run success trys - if it is correct match, highligh divs 
-	//push correct match to matched list arr.
-	//and empty current player choice.
-	//make sure to include function that prevents opened card to be selected
-	//possibly add something like this:
-	//matchedList.some('e.target') -> skip currentPlayerChoiceGenerator();  
 		}
- 	} else {
-		return;
+
+
+
+	 	} else {
+			return;
+		}
 	}
+
+//run success trys - if it is correct match, highligh divs 
+//push correct match to matched list arr.
+//and empty current player choice.
+//make sure to include function that prevents opened card to be selected
+//possibly add something like this:
+//matchedList.some('e.target') -> skip currentPlayerChoiceGenerator();  
 })
 // cardDeck -> when it’s clicked then it will trigger the matching function & winning condition
 // *extra help-icon which will generate pop-up for the reference
@@ -277,7 +286,7 @@ function currentPlayerChoiceGenerator(clickedElement) {
 }
 
 function successMatch() {
-
+	successNumber = matchedList.length;
 	for(elem in targetLists){
 		let idvTargetList = targetLists[elem];
 		if(idvTargetList.includes(currentPlayerChoice[0]) && idvTargetList.includes(currentPlayerChoice[1])){
@@ -288,15 +297,35 @@ function successMatch() {
 			console.log(`this is matched List ${matchedList}`);
 		} else if(!idvTargetList.includes(currentPlayerChoice[0]) || !idvTargetList.includes(currentPlayerChoice[1])){
 			console.log(`wrong choice!`);
-
+			for(elem of currentPlayerChoice){
+				const currentCard = document.querySelector(elem);
+				console.log()
+			}
 		}
 	}
-
+	//failed try handler:
+	if(successNumber === matchedList.length){
+		console.log('it is in the failure handler function');
+		failedTryHandler();
+	}
+//clearing memory of currentPlayerChoice after each set of cards selection
+	if(currentPlayerChoice.length === 2){
 	console.log(`this is player list before delete ${currentPlayerChoice}`);
 	for(let i = 0; i < 2; i++){
 		currentPlayerChoice.pop();
 	}
 	console.log(`this is after delete ${currentPlayerChoice}`);
+	}
+}
+
+function failedTryHandler(){
+	// for(elem of currentPlayerChoice){
+	// 	console.log(`this should only appear after the failed try ${elem}`);
+	// 	let firstEl = document.querySelector(`.${elem}`).firstElementChild;
+	// 	console.log(`this should have <img>tag of failed try ${firstEl}`);
+	// 	firstEl.style.display = 'none';
+	// }	
+	
 }
 
 	//if the currentPlayerChoice matches any of the targetList inner objects, push the object to the matchedList 
