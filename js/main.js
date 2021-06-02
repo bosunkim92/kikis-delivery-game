@@ -88,14 +88,14 @@ const cardDeck = ['tombo', 'ursula', 'ket',
 
 
 //define state variable:
-// the target needs to be generated each time the game restarts.
+
 let targetLists = [];
 let currentPlayerChoice= [];
 let matchedList = []; 
 let successNumber;
 let level = 1;
-let chances = 10; //shows how many chances left. Each time mismatch happens, this value decreases by 1.
-
+let chances = 10;
+let currentMatchedListIdx = 0;
 
 //cached element reference:
 const startButton = document.getElementById('start-game');
@@ -104,9 +104,7 @@ const landing = document.querySelector('.landing');
 const commentBox = document.querySelector('.comment-box');
 const gameBoard = document.querySelector('.game-board');
 
-// when the player choice is matching any of targetList, then highlight (box-shadow) the cards on the DOM - this will stay showing ‘face’ side up until the next game
-// chances - (either heart or star) 
-// level
+
 // check mark image
 // *extra = will provide extra (possibly pop-up page) document to show people’s face and name - for the reference
 
@@ -134,10 +132,6 @@ gameBoard.addEventListener('click', function(e){
 			return;
 		}
 	}
-	//run success trys - if it is correct match, highligh divs 
-	//make sure to include function that prevents opened card to be selected
-	//possibly add something like this:
-	//matchedList.some('e.target') -> skip currentPlayerChoiceGenerator();  
 })
 // *extra help-icon which will generate pop-up for the reference
 
@@ -147,13 +141,19 @@ function init() {
 	if(targetLists != ""){
 		targetLists = [];
 	}
+	if(chances === 0){
+		chances = 10;
+	}
+	if(matchedList != ""){
+		matchedList = [];
+	}
 	targetGenerator();
 	shuffle(cardDeck);
 	render();
 }
 
 function render() {
-	if(level > 1){
+	if(level >= 1){
 		clearDOM();
 	}
 	commentGenerator();
@@ -230,9 +230,11 @@ function targetGenerator() {
 
 function commentGenerator() {
 	//based on target generated, create comment that will be posted on the DOM
+	commentBox.style.border = 'thick solid #ffd900';
+	commentBox.style.boxShadow = '1px 1px 1px 1px #bd9700';
 	const kiki = document.createElement('img');
 	kiki.src = 'img/kiki.png';
-	kiki.style.width = '150px';
+	kiki.style.width = '200px';
 	kiki.style.height = 'auto';
 	commentBox.appendChild(kiki);
 	const greeting = document.createElement('p');
@@ -258,6 +260,8 @@ function commentGenerator() {
 		const heartImg = document.createElement('img');
 		heartImg.className = 'hearts';
 		heartImg.src = 'img/heart.png';
+		// heartImg.style.width = '30px';
+		// heartImg.style.height = 'auto';
 		heartColumn.appendChild(heartImg);
 	}
 }
@@ -275,8 +279,9 @@ function successMatch() {
 		let idvTargetList = targetLists[elem];
 		if(idvTargetList.includes(currentPlayerChoice[0]) && idvTargetList.includes(currentPlayerChoice[1])){
 			matchedList.push([]);
-			matchedList[elem].push(currentPlayerChoice[0]);
-			matchedList[elem].push(currentPlayerChoice[1]);
+			matchedList[currentMatchedListIdx].push(currentPlayerChoice[0]);
+			matchedList[currentMatchedListIdx].push(currentPlayerChoice[1]);
+			currentMatchedListIdx++;
 			for(elem of currentPlayerChoice){
 				let eachCard = document.querySelector(`.${elem}`);
 				console.log(eachCard);
@@ -285,7 +290,6 @@ function successMatch() {
 			console.log(`you have delivered correct item to person!`);
 			console.log(`this is matched List ${matchedList}`);
 		} else if(!idvTargetList.includes(currentPlayerChoice[0]) || !idvTargetList.includes(currentPlayerChoice[1])){
-			// console.log(`wrong choice!`);
 		}
 	}
 	//failed try handler:
@@ -293,12 +297,14 @@ function successMatch() {
 		console.log('it is in the failure handler function');
 		setTimeout(function(){
 			chances--;
+			if (chances === 0){
+				startButton.textContent = "replay";
+				startButton.style.display = 'block';
+			}
 			let updateChances = document.querySelector('h2');
 			updateChances.removeChild(updateChances.firstChild);
 			for(elem of currentPlayerChoice){
-				console.log(`this should only appear after the failed try ${elem}`);
 				let firstEl = document.querySelector(`.${elem}`).firstElementChild;
-				console.log(`this should have <img>tag of failed try ${firstEl}`);
 				firstEl.style.display = 'none';
 			}			
 		}, 300);
@@ -306,13 +312,11 @@ function successMatch() {
 //clearing memory of currentPlayerChoice after each set of cards selection
 	setTimeout(function(){
 		if(currentPlayerChoice.length === 2){
-			console.log(`this is player list before delete ${currentPlayerChoice}`);
 			for(let i = 0; i < 2; i++){
 				currentPlayerChoice.pop();
 			}
-			console.log(`this is after delete ${currentPlayerChoice}`);
 		}
-	}, 500);
+	}, 700);
 
 	setTimeout(function(){
 		if(matchedList.length === targetLists.length){
@@ -326,16 +330,13 @@ function successMatch() {
 		//possible code to include to render(): 
 			// let p (comment) = document.getElementById(‘comment’).textContent = `${person} needs ${item} <img scr=’/img/check.png’>`;        something like this ..
 
-			
-		
-	// needs another function that checks if all the targetLis are found(matched). (array method like .every) might work … but will that work the same way to object? 
-	// need another function that controls  
 function levelUp() {
 	// check if all the matchedList targetList objects
 	level++;
 	let updateLevel = document.querySelector('h3');
 	updateLevel.textContent = `Level: ${level}`;
 	successNumber = 0;
+	currentMatchedListIdx = 0;
 	matchedList = [];
 	alert(`You have successfully delivered all items to the neighbors! Now your level is ${level}`);
 	init();

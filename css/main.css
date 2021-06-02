@@ -1,5 +1,6 @@
 body {
     background: url('/img/gameBg.jpeg') no-repeat center center fixed;
+    background-size: cover;
     display: flex;
     flex-direction: column;
 
@@ -10,6 +11,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 999;
 }
 #logo {
     width: 300px;
@@ -18,8 +20,14 @@ body {
 }
 
 #start-game {
-    width: 100px;
+    font-family: 'Architects Daughter', cursive;
+    font-size: 30px;
+    width: auto;
+    height: 80px;
+    padding: 20px;
     border-color: white;
+    background-color: rgba(255, 255, 255, 0.815);
+    border-radius: 50%;
     display:block;
     position: inherit;
     left: 50%;
@@ -36,13 +44,14 @@ body {
     transform: translate(-50%, -45%);
 }
 p {
-    margin-bottom: 0;
+    margin: 5px 0px;
+    font-size: 25px;
 }
 .comment-box {
-    background-color: blue;
+    background-color: rgba(0, 17, 255, 0.9);
+    font-family: 'Architects Daughter', cursive;
     color: white;
-    padding-left: 130px;
-
+    padding-left: 185px;
 }
 
 .comment-box img{
@@ -51,14 +60,15 @@ p {
 }
 
 .comment-box h3{
+    font-size: 30px;
     position: absolute;
-    right: 50px;
-    top: 53px;
+    right: 30px;
+    top: 50px;
 }
 .comment-box h2{
     position: absolute;
     max-width: 600px;
-    right: 50px;
+    right: 20px;
     top: 0;
 }
 
@@ -81,15 +91,15 @@ h2{
 }
 .card-deck {
     width: 120px;
-    height: 180px;
+    height: 150px;
     border-radius: 20%;
-    margin: 10px;
+    margin: 15px;
     background-color: #ffd4f4d5;
     font-size: 0px;
 }
 
 .card-deck img{
-    padding: 30px 0px;
+    padding: 15px 0px;
     width: 110px;
     height: auto;
     border: thick double ivory ;
