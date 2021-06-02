@@ -94,7 +94,7 @@ let currentPlayerChoice= [];
 let matchedList = []; 
 let successNumber;
 let level = 1;
-let chances = 5; //shows how many chances left. Each time mismatch happens, this value decreases by 1.
+let chances = 10; //shows how many chances left. Each time mismatch happens, this value decreases by 1.
 
 
 //cached element reference:
@@ -121,10 +121,10 @@ startButton.addEventListener('click', function(e) {
 
 gameBoard.addEventListener('click', function(e){
 	if(e.target.className !== 'game-board'){
-		if(matchedList.length === targetLists.length){
-			levelUp();
-			return;
-		}
+		// if(matchedList.length === targetLists.length){
+		// 	levelUp();
+		// 	return;
+		// }
 		if(currentPlayerChoice.length < 2){
 			console.log(e.target);
 			console.log(e.target.firstElementChild);
@@ -148,12 +148,18 @@ gameBoard.addEventListener('click', function(e){
 //functions:
 
 function init() {
+	if(targetLists != ""){
+		targetLists = [];
+	}
 	targetGenerator();
 	shuffle(cardDeck);
 	render();
 }
 
 function render() {
+	if(level > 1){
+		clearDOM();
+	}
 	commentGenerator();
 	generateCardDeck(cardDeck);
 }
@@ -245,6 +251,12 @@ function commentGenerator() {
 		deliveryList.textContent = targetListComment;
 		commentBox.appendChild(deliveryList);
 	}
+	const currentLevel = document.createElement('h3');
+	currentLevel.textContent = `Level: ${level}`;
+	commentBox.appendChild(currentLevel);
+	const currentChances = document.createElement('h2');
+	currentChances.textContent = `Try: ${chances}`;
+	commentBox.appendChild(currentChances);
 }
 
 function currentPlayerChoiceGenerator(clickedElement) {
@@ -277,13 +289,16 @@ function successMatch() {
 	if(successNumber === matchedList.length){
 		console.log('it is in the failure handler function');
 		setTimeout(function(){
+			chances--;
+			let updateChances = document.querySelector('h2')
+			updateChances.textContent = `Try: ${chances}`;
 			for(elem of currentPlayerChoice){
 				console.log(`this should only appear after the failed try ${elem}`);
 				let firstEl = document.querySelector(`.${elem}`).firstElementChild;
 				console.log(`this should have <img>tag of failed try ${firstEl}`);
 				firstEl.style.display = 'none';
 			}			
-		}, 1000);
+		}, 500);
 	}
 //clearing memory of currentPlayerChoice after each set of cards selection
 	setTimeout(function(){
@@ -294,20 +309,16 @@ function successMatch() {
 			}
 			console.log(`this is after delete ${currentPlayerChoice}`);
 		}
-	}, 2000);
+	}, 1000);
+
+	setTimeout(function(){
+		if(matchedList.length === targetLists.length){
+			levelUp();
+			return;
+		}
+	}, 1500);
 }
-// function failedTryHandler(){
-// 	for(elem of currentPlayerChoice){
-// 		console.log(`this should only appear after the failed try ${elem}`);
-// 		let firstEl = document.querySelector(`.${elem}`).firstElementChild;
-// 		console.log(`this should have <img>tag of failed try ${firstEl}`);
-// 		firstEl.style.display = 'none';
-// 	}	
 
-// }
-
-	//if the currentPlayerChoice matches any of the targetList inner objects, push the object to the matchedList 
-	
 	// once matchedList get updated, render a image of check mark on the side of the targetList 
 		//possible code to include to render(): 
 			// let p (comment) = document.getElementById(‘comment’).textContent = `${person} needs ${item} <img scr=’/img/check.png’>`;        something like this ..
@@ -319,8 +330,19 @@ function successMatch() {
 function levelUp() {
 	// check if all the matchedList targetList objects
 	level++;
-	alert(`now your level is ${level}`);
+	let updateLevel = document.querySelector('h3');
+	updateLevel.textContent = `Level: ${level}`;
+	alert(`You have successfully delivered all items to the neighbors! Now your level is ${level}`);
+	init();
 }
 
+function clearDOM() {
+	while(commentBox.firstChild){
+		commentBox.removeChild(commentBox.firstChild);
+	}
+	while(gameBoard.firstChild){
+		gameBoard.removeChild(gameBoard.firstChild);
+	}
 
+}
 //room for improvement = greeting comment can include player's input name;

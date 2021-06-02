@@ -49,6 +49,17 @@ p {
     left: 0;
 }
 
+.comment-box h3{
+    position: absolute;
+    right: 50px;
+    top: 40px;
+}
+.comment-box h2{
+    position: absolute;
+    right: 50px;
+    top: 0;
+}
+
 .card-deck {
     width: 120px;
     height: 180px;
