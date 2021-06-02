@@ -90,27 +90,14 @@ const cardDeck = ['tombo', 'ursula', 'ket',
 //define state variable:
 // the target needs to be generated each time the game restarts.
 let targetLists = [];
-
 let currentPlayerChoice= [];
-	//when player clicks card, this variable needs to be updated
-	//only one set of target (a person, an item) can be stored 
-	//once the set is correct, this value needs to be pushed(or other object method similar to array.push*) to matchedList
-	//is object better? or array better in this case?
-
-let matchedList = []; //starts as empty object, will be updated as the new match happens
-
+let matchedList = []; 
 let successNumber;
-
-let level = 1; //shows current level. Once all the objects in the targetList are matched, this value will increase by 1.
-
-let chances; //shows how many chances left. Each time mismatch happens, this value decreases by 1.
-
-
+let level = 1;
+let chances = 5; //shows how many chances left. Each time mismatch happens, this value decreases by 1.
 
 
 //cached element reference:
-
-
 const startButton = document.getElementById('start-game');
 const logo = document.getElementById('logo');
 const landing = document.querySelector('.landing');
@@ -120,9 +107,7 @@ const gameBoard = document.querySelector('.game-board');
 // when the player choice is matching any of targetList, then highlight (box-shadow) the cards on the DOM - this will stay showing ‘face’ side up until the next game
 // chances - (either heart or star) 
 // level
-// delivery list comment (targetList)
 // check mark image
-
 // *extra = will provide extra (possibly pop-up page) document to show people’s face and name - for the reference
 
 
@@ -132,7 +117,6 @@ startButton.addEventListener('click', function(e) {
 	logo.style.display = 'none';
 	startButton.style.display = 'none';
 	init();
-	render();
 })
 
 gameBoard.addEventListener('click', function(e){
@@ -142,49 +126,36 @@ gameBoard.addEventListener('click', function(e){
 			return;
 		}
 		if(currentPlayerChoice.length < 2){
-		console.log(e.target);
-		console.log(e.target.firstElementChild);
-		e.target.firstElementChild.style.display = 'block';
-		currentPlayerChoiceGenerator(e.target);
-		if(currentPlayerChoice.length === 2){
-		successMatch();
-		console.log(`this is current length of matchedList ${matchedList.length}`);
-		}
-
-
-
-	 	} else {
+			console.log(e.target);
+			console.log(e.target.firstElementChild);
+			e.target.firstElementChild.style.display = 'block';
+			currentPlayerChoiceGenerator(e.target);
+			if(currentPlayerChoice.length === 2){
+				successMatch();
+				console.log(`this is current length of matchedList ${matchedList.length}`);
+			}
+		} else {
 			return;
 		}
 	}
-
-//run success trys - if it is correct match, highligh divs 
-//push correct match to matched list arr.
-//and empty current player choice.
-//make sure to include function that prevents opened card to be selected
-//possibly add something like this:
-//matchedList.some('e.target') -> skip currentPlayerChoiceGenerator();  
+	//run success trys - if it is correct match, highligh divs 
+	//make sure to include function that prevents opened card to be selected
+	//possibly add something like this:
+	//matchedList.some('e.target') -> skip currentPlayerChoiceGenerator();  
 })
-// cardDeck -> when it’s clicked then it will trigger the matching function & winning condition
 // *extra help-icon which will generate pop-up for the reference
 
 //functions:
 
 function init() {
-	// invoke mixingCard() function when the game resets
 	targetGenerator();
 	shuffle(cardDeck);
-	// console.log('this is init function working');
-	// generate target by targetGenerator()
-	// invoke render()
-	// invoke successMatch() function
+	render();
 }
 
 function render() {
-	// alter the DOM element
 	commentGenerator();
 	generateCardDeck(cardDeck);
-	// console.log('this is render function working');
 }
 
 function generateCardDeck(cardDeckArr) {
@@ -278,11 +249,9 @@ function commentGenerator() {
 
 function currentPlayerChoiceGenerator(clickedElement) {
 	let cardSelected = clickedElement.textContent;
-	// console.log(cardSelected);
 	if (currentPlayerChoice.length < 2){
 		currentPlayerChoice.push(cardSelected);
 	}
-	// console.log(currentPlayerChoice);
 }
 
 function successMatch() {
@@ -293,40 +262,49 @@ function successMatch() {
 			matchedList.push([]);
 			matchedList[elem].push(currentPlayerChoice[0]);
 			matchedList[elem].push(currentPlayerChoice[1]);
+			for(elem of currentPlayerChoice){
+				let eachCard = document.querySelector(`.${elem}`);
+				console.log(eachCard);
+				eachCard.firstElementChild.style.borderColor = 'green';
+			}
 			console.log(`you have delivered correct item to person!`);
 			console.log(`this is matched List ${matchedList}`);
 		} else if(!idvTargetList.includes(currentPlayerChoice[0]) || !idvTargetList.includes(currentPlayerChoice[1])){
-			console.log(`wrong choice!`);
-			for(elem of currentPlayerChoice){
-				const currentCard = document.querySelector(elem);
-				console.log()
-			}
+			// console.log(`wrong choice!`);
 		}
 	}
 	//failed try handler:
 	if(successNumber === matchedList.length){
 		console.log('it is in the failure handler function');
-		failedTryHandler();
+		setTimeout(function(){
+			for(elem of currentPlayerChoice){
+				console.log(`this should only appear after the failed try ${elem}`);
+				let firstEl = document.querySelector(`.${elem}`).firstElementChild;
+				console.log(`this should have <img>tag of failed try ${firstEl}`);
+				firstEl.style.display = 'none';
+			}			
+		}, 1000);
 	}
 //clearing memory of currentPlayerChoice after each set of cards selection
-	if(currentPlayerChoice.length === 2){
-	console.log(`this is player list before delete ${currentPlayerChoice}`);
-	for(let i = 0; i < 2; i++){
-		currentPlayerChoice.pop();
-	}
-	console.log(`this is after delete ${currentPlayerChoice}`);
-	}
+	setTimeout(function(){
+		if(currentPlayerChoice.length === 2){
+			console.log(`this is player list before delete ${currentPlayerChoice}`);
+			for(let i = 0; i < 2; i++){
+				currentPlayerChoice.pop();
+			}
+			console.log(`this is after delete ${currentPlayerChoice}`);
+		}
+	}, 2000);
 }
+// function failedTryHandler(){
+// 	for(elem of currentPlayerChoice){
+// 		console.log(`this should only appear after the failed try ${elem}`);
+// 		let firstEl = document.querySelector(`.${elem}`).firstElementChild;
+// 		console.log(`this should have <img>tag of failed try ${firstEl}`);
+// 		firstEl.style.display = 'none';
+// 	}	
 
-function failedTryHandler(){
-	// for(elem of currentPlayerChoice){
-	// 	console.log(`this should only appear after the failed try ${elem}`);
-	// 	let firstEl = document.querySelector(`.${elem}`).firstElementChild;
-	// 	console.log(`this should have <img>tag of failed try ${firstEl}`);
-	// 	firstEl.style.display = 'none';
-	// }	
-	
-}
+// }
 
 	//if the currentPlayerChoice matches any of the targetList inner objects, push the object to the matchedList 
 	
