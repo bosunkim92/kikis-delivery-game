@@ -135,7 +135,7 @@ gameBoard.addEventListener('click', function(e){
 })
 // *extra help-icon which will generate pop-up for the reference
 hintDiv.addEventListener('click', function(){
-	console.log('hi there');
+	generateHint();
 })
 //functions:
 
@@ -353,14 +353,20 @@ function clearDOM() {
 	while(gameBoard.firstChild){
 		gameBoard.removeChild(gameBoard.firstChild);
 	}
+	while(hintDiv.firstChild){
+		hintDiv.removeChild(hintDiv.firstChild);
+	}
 
 }
 
 function generateHint(peopleArr) {
+	const hintDivInnerDiv = document.createElement('div');
+	hintDivInnerDiv.className = 'hint hint-background';
+	hintDiv.appendChild(hintDivInnerDiv);
+	const personHintDiv = document.createElement('div');
+	personHintDiv.classNAme = `hint person-name`;
 	for(person in peopleArr){
-		const cardDeckDiv = document.createElement('div');
-		cardDeckDiv.textContent = `${person}`;
-		cardDeckDiv.classNAme = `hint person-name`;
+		console.log(peopleArr[person]);
 	}
 }
 //room for improvement = greeting comment can include player's input name;
