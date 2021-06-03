@@ -246,9 +246,8 @@ function commentGenerator() {
 	commentBox.style.border = 'thick solid #ffd900';
 	commentBox.style.boxShadow = '1px 1px 1px 1px #bd9700';
 	const kiki = document.createElement('img');
+	kiki.id = 'kiki';
 	kiki.src = 'img/kiki.png';
-	kiki.style.width = '200px';
-	kiki.style.height = 'auto';
 	commentBox.appendChild(kiki);
 	const greeting = document.createElement('p');
 	greeting.textContent = 'Good Morning! Here are today\'s delivery lists!';

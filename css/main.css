@@ -10,6 +10,7 @@ body {
     transform: translate(-50%, -50%);
     z-index: 999;
 }
+
 #logo {
     width: 300px;
     height: auto;
@@ -38,17 +39,25 @@ body {
     position: fixed;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -45%);
+    transform: translate(-50%, -30%);
 }
 p {
     margin: 5px 0px;
     font-size: 25px;
 }
+
+#kiki {
+    width: 200px;
+    height: auto;
+    margin-left: 40px;
+}
+
 .comment-box {
     background-color: rgba(0, 17, 255, 0.9);
     font-family: 'Architects Daughter', cursive;
     color: white;
     padding-left: 185px;
+    margin: 0 40px;
 }
 
 .comment-box img{
@@ -61,6 +70,7 @@ p {
     position: absolute;
     right: 30px;
     top: 50px;
+    margin-right: 40px
 }
 .comment-box h2{
     position: absolute;
@@ -72,19 +82,22 @@ p {
 h2{
     display: flex; 
     flex-direction: row;
+    margin-right: 40px;
 }
 
 .hearts-column {
     position: relative;
     padding-top: 3px;
     padding-bottom: 0px;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 .hearts {
     position: absolute;
     display: flex;
     flex-direction: row;
+    width: 38px;
+    height: auto;
 }
 .card-deck {
     width: 120px;
@@ -110,6 +123,7 @@ h2{
     position: relative;
     top: 50px;
     left: 20px;
+    margin-left: 40px;
     border-color: white;
     background-color: rgba(255, 255, 255, 0.5);
     color: white;
@@ -141,4 +155,240 @@ h2{
 .person-name img {
     width: 120px;
     height: 120px;
+}
+
+@media screen and (max-width: 1200px){
+
+    .game-board {
+        transform: translate(-50%, -30%);
+    }
+    p {
+        margin: 3px 0px;
+        font-size: 20px;
+    }
+
+    #kiki {
+        width: 150px;
+        height: auto;
+    }
+
+    .comment-box {
+        background-color: rgba(0, 17, 255, 0.9);
+        font-family: 'Architects Daughter', cursive;
+        color: white;
+        padding-left: 135px;
+    }
+    
+    .comment-box h3{
+        font-size: 25px;
+        position: absolute;
+        right: 30px;
+        top: 50px;
+    }
+    .comment-box h2{
+        position: absolute;
+        max-width: 600px;
+        right: 20px;
+        top: 0;
+    }
+    
+    h2{
+        display: flex; 
+        flex-direction: row;
+    }
+    
+    .hearts-column {
+        padding-top: 3px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .hearts {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        width: 30px;
+        height: auto;
+    }
+    .card-deck {
+        width: 100px;
+        height: 125px;
+        border-radius: 20%;
+        margin: 7px;
+    }
+    
+    .card-deck img{
+        padding: 13px 0px;
+        width: 90px;      
+    }
+    
+    #hint, .hint-background {
+        font-size: 15px;
+        top: 15px;
+        left: 17px;
+    }
+    
+    #hint {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .comment-box h2{
+        position: relative;
+        max-width: 600px;
+        right: 20px;
+        top: -20px;
+    }
+
+    .hearts {
+        display: flex;
+        flex-direction: row;
+        width: 30px;
+        height: auto;
+    }
+    .card-deck {
+        width: 90px;
+        height: 115px;
+        border-radius: 20%;
+        margin: 7px;
+    }
+    
+    .card-deck img{
+        padding: 10px 0px;
+        width: 80px;      
+    }
+    #hint, .hint-background {
+        left: 5px;
+    }
+}
+@media screen and (max-width: 750px){
+    .comment-box h2{
+        position: relative;
+        max-width: 300px;
+    }
+}
+@media screen and (max-width: 400px){
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    #start-game {
+        font-family: 'Architects Daughter', cursive;
+        font-size: 30px;
+        width: auto;
+        height: 80px;
+        padding: 20px;
+        border-color: white;
+        background-color: rgba(255, 255, 255, 0.815);
+        border-radius: 50%;
+        display:block;
+        position: inherit;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .game-board {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -30%);
+    }
+    
+    p {
+        margin: 1px 0px;
+        font-size: 10px;
+    }
+    
+    #kiki {
+        width: 80px;
+        height: auto;
+        margin-left: 10px;
+    }
+    
+    .comment-box {
+        background-color: rgba(0, 17, 255, 0.9);
+        font-family: 'Architects Daughter', cursive;
+        color: white;
+        padding-left: 70px;
+        margin: 0 10px;
+    }
+    
+    .comment-box h3{
+        font-size: 15px;
+        position: absolute;
+        right: 30px;
+        top: 35px;
+        margin-right: 10px
+    }
+    .comment-box h2{
+        position: relative;
+        max-width: 300px;
+    }
+
+    .hearts-column {
+        position: relative;
+        padding-top: 3px;
+        padding-bottom: 0px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .hearts {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        width: 20px;
+        height: auto;
+    }
+    .card-deck {
+        width: 50px;
+        height: 60px;
+        margin: 7px;
+    }
+    
+    .card-deck img{
+        padding: 3px 0px;
+        width: 45px;
+        height: auto;
+    }
+    
+    #hint, .hint-background {
+        font-size: 10px;
+        position: relative;
+        top: 4px;
+        left: 5px;
+
+    }
+    
+    #hint {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+    
+    .hint-background {
+        max-width: 270px;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        z-index: 1;
+    }
+    
+    .person-name {
+        text-align: center;
+        color: black;
+        display: flex;
+        flex-direction: column;
+        margin: 5px;
+    }
+    
+    .person-name img {
+        width: 80px;
+        height: 80px;
+    }
 }
