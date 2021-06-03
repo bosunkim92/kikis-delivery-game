@@ -1,5 +1,3 @@
-//Pseudocode
-//define constant variable:
 const people = {
 	tombo: {
 		name: 'Tombo',
@@ -78,6 +76,7 @@ const items = {
 	}
 }
 
+
 const cardDeck = ['tombo', 'ursula', 'ket',
 'osono', 'maki', 'police',
 'hamburger', 'mail', 'bread',
@@ -85,9 +84,6 @@ const cardDeck = ['tombo', 'ursula', 'ket',
 'newspaper', 'flowers', 'present',
 'toy', 'key', 'bentoBox'];
 
-
-
-//define state variable:
 
 let targetLists = [];
 let currentPlayerChoice= [];
@@ -97,7 +93,7 @@ let level = 1;
 let chances = 10;
 let currentMatchedListIdx = 0;
 
-//cached element reference:
+
 const startButton = document.getElementById('start-game');
 const logo = document.getElementById('logo');
 const landing = document.querySelector('.landing');
@@ -105,11 +101,6 @@ const commentBox = document.querySelector('.comment-box');
 const gameBoard = document.querySelector('.game-board');
 const hintDiv = document.querySelector('.hint');
 
-// check mark image
-// *extra = will provide extra (possibly pop-up page) document to show people’s face and name - for the reference
-
-
-//event listeners:
 
 startButton.addEventListener('click', function(e) {
 	logo.style.display = 'none';
@@ -133,7 +124,7 @@ gameBoard.addEventListener('click', function(e){
 		}
 	}
 })
-// *extra help-icon which will generate pop-up for the reference
+
 hintDiv.addEventListener('click', function(){
 	if(!document.querySelector('.hint-toggle')){
 	generateHint(people);
@@ -144,7 +135,7 @@ hintDiv.addEventListener('click', function(){
 		document.querySelector('.hint-toggle').style.display = 'block';
 	}
 })
-//functions:
+
 
 function init() {
 	if(targetLists != ""){
@@ -198,35 +189,24 @@ function generateCardDeck(cardDeckArr) {
 	for(elem of cardDeckImg){
 		elem.style.display = 'none';
 	}
-	//room for improvement: add backside image for the cards
 }
 
 function shuffle(arr) {
-	//randomly rearrange cardDeck array- used Fisher-Yates Shuffle
 	let len = arr.length;
 	let temp;
 	let randomIdx;
 
-	//while there remain element to shuffle...
 	while(len){
-	//pick a random element's index within remaining array element
-	randomIdx = Math.floor(Math.random() * len--);
-
-	//and swap it with the current (temporary) element (from the back side)
-	temp = arr[len];
-	arr[len] = arr[randomIdx];
-	arr[randomIdx] = temp; 
+		randomIdx = Math.floor(Math.random() * len--);
+		temp = arr[len];
+		arr[len] = arr[randomIdx];
+		arr[randomIdx] = temp; 
 	}
 
 	return arr;
-
 }
 
 function targetGenerator() {
-	//iterate over people object and choose one person
-	//iterate over items object and choose one item
-	//people and objects cannot be listed more than once in the targetList
-	//generates targetList
 	let deliveryTarget = Object.keys(people);
 	let deliveryItem = Object.keys(items);
 
@@ -242,7 +222,6 @@ function targetGenerator() {
 }
 
 function commentGenerator() {
-	//based on target generated, create comment that will be posted on the DOM
 	commentBox.style.border = 'thick solid #ffd900';
 	commentBox.style.boxShadow = '1px 1px 1px 1px #bd9700';
 	const kiki = document.createElement('img');
@@ -336,10 +315,6 @@ function successMatch() {
 	}, 1000);
 }
 
-	// once matchedList get updated, render a image of check mark on the side of the targetList 
-		//possible code to include to render(): 
-			// let p (comment) = document.getElementById(‘comment’).textContent = `${person} needs ${item} <img scr=’/img/check.png’>`;        something like this ..
-
 function levelUp() {
 	// check if all the matchedList targetList objects
 	level++;
@@ -385,4 +360,3 @@ function generateHint(peopleArr) {
 		personHintDivSelection.appendChild(personImg);
 	}
 }
-//room for improvement = greeting comment can include player's input name;
