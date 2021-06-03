@@ -123,7 +123,22 @@ h2{
 }
 
 .hint-background {
-	width: 450px;
-	height: 400px;
-	display: 'none';
+	max-width: 430px;
+	height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    z-index: 1;
+}
+
+.person-name {
+    text-align: center;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.person-name img {
+    width: 120px;
+    height: 120px;
 }

@@ -135,7 +135,14 @@ gameBoard.addEventListener('click', function(e){
 })
 // *extra help-icon which will generate pop-up for the reference
 hintDiv.addEventListener('click', function(){
-	generateHint();
+	if(!document.querySelector('.hint-toggle')){
+	generateHint(people);
+	}
+	if(document.querySelector('.hint-toggle').style.display === 'block'){
+		document.querySelector('.hint-toggle').style.display = 'none';
+	} else {
+		document.querySelector('.hint-toggle').style.display = 'block';
+	}
 })
 //functions:
 
@@ -360,13 +367,23 @@ function clearDOM() {
 }
 
 function generateHint(peopleArr) {
+	const hintToggleDiv = document.createElement('div');
+	hintToggleDiv.className = 'hint hint-toggle';
+	hintDiv.appendChild(hintToggleDiv);
+	const hintToggle = document.querySelector('.hint-toggle');
 	const hintDivInnerDiv = document.createElement('div');
 	hintDivInnerDiv.className = 'hint hint-background';
-	hintDiv.appendChild(hintDivInnerDiv);
-	const personHintDiv = document.createElement('div');
-	personHintDiv.classNAme = `hint person-name`;
+	hintToggle.appendChild(hintDivInnerDiv);
 	for(person in peopleArr){
-		console.log(peopleArr[person]);
+		let personName = `${peopleArr[person].name}`;
+		const personHintDiv = document.createElement('div');
+		personHintDiv.textContent = personName;
+		personHintDiv.classList = `hint person-name ${personName}`;
+		hintDivInnerDiv.appendChild(personHintDiv);
+		const personImg = document.createElement('img');
+		personImg.src = `${peopleArr[person].imgUrl}`;
+		const personHintDivSelection = document.querySelector(`.${personName}`);
+		personHintDivSelection.appendChild(personImg);
 	}
 }
 //room for improvement = greeting comment can include player's input name;
