@@ -103,7 +103,7 @@ const logo = document.getElementById('logo');
 const landing = document.querySelector('.landing');
 const commentBox = document.querySelector('.comment-box');
 const gameBoard = document.querySelector('.game-board');
-
+const hintDiv = document.querySelector('.hint');
 
 // check mark image
 // *extra = will provide extra (possibly pop-up page) document to show people’s face and name - for the reference
@@ -134,7 +134,9 @@ gameBoard.addEventListener('click', function(e){
 	}
 })
 // *extra help-icon which will generate pop-up for the reference
-
+hintDiv.addEventListener('click', function(){
+	console.log('hi there');
+})
 //functions:
 
 function init() {
@@ -158,6 +160,10 @@ function render() {
 	}
 	commentGenerator();
 	generateCardDeck(cardDeck);
+	const hint = document.createElement('button');
+	hint.textContent = 'hint';
+	hint.id = 'hint';
+	hintDiv.appendChild(hint);
 }
 
 function generateCardDeck(cardDeckArr) {
@@ -260,8 +266,6 @@ function commentGenerator() {
 		const heartImg = document.createElement('img');
 		heartImg.className = 'hearts';
 		heartImg.src = 'img/heart.png';
-		// heartImg.style.width = '30px';
-		// heartImg.style.height = 'auto';
 		heartColumn.appendChild(heartImg);
 	}
 }
@@ -350,5 +354,13 @@ function clearDOM() {
 		gameBoard.removeChild(gameBoard.firstChild);
 	}
 
+}
+
+function generateHint(peopleArr) {
+	for(person in peopleArr){
+		const cardDeckDiv = document.createElement('div');
+		cardDeckDiv.textContent = `${person}`;
+		cardDeckDiv.classNAme = `hint person-name`;
+	}
 }
 //room for improvement = greeting comment can include player's input name;
