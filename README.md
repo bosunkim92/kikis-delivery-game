@@ -3,7 +3,7 @@
 ### Welcome everyone!
 **Kiki's Delivery Service** game has similar concept of Memory Matching game, which requires the player to find two cards that are related to each other. The theme of the game is based on _**Studio Ghibli**_'s animation movie called _**Kiki's Delivery Service**_. 
 
-link to the game is [here](https://bosunkim92.github.io/kikis-delivery-game)
+link to the game is **[here](https://bosunkim92.github.io/kikis-delivery-game)**
 
 Wireframe:
 ![Figma_wireframe](./img/figma.png)
@@ -11,11 +11,11 @@ Wireframe:
 Pseudocode:
 Starting with the bare minimum - HTML landing page with a start button;
 Once player clicks on to the 'Start Play', JavaScript code will dynamically build the game features on to the page.
-This function uses _**Fisher-Yates**_ suffle algorithm.
+This function uses _**Fisher-Yates**_ shuffle algorithm.
 
 General outline of the game is like this -
 * Goal of the game, delivery list, is generated randomly by the computer
-* Cards that contains images of the people and the items are suffled on to the game board area.
+* Cards that contains images of the people and the items are shuffled on to the game board area.
 * Player can choose a card by clicking the card.
 * Once player selects two cards, it triggers a function that compares player's selection with the target goal.
 * If the selection is correct, the the cards will display green box-shadow.
@@ -47,3 +47,5 @@ Once your try reaches 0, your game is over, and you can click 'Replay' button to
 Let's see if you can make it to next level!
 ![levelup](./img/levelup.png)
 
+**Next Steps:**
+For future updates, I want to add more feature to the target generation as level goes up, as well as transition animation to the card shuffling  
