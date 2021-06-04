@@ -9,9 +9,10 @@ Wireframe:
 ![Figma_wireframe](./img/figma.png)
 
 Pseudocode:
-Starting with the bare minimum - landing page with a start button;
-Once player clicks on to the 'Start Play', JavaScript code will dynamically 
-build the game features on to the page. 
+Starting with the bare minimum - HTML landing page with a start button;
+Once player clicks on to the 'Start Play', JavaScript code will dynamically build the game features on to the page.
+This function uses _**Fisher-Yates**_ suffle algorithm.
+
 General outline of the game is like this -
 * Goal of the game, delivery list, is generated randomly by the computer
 * Cards that contains images of the people and the items are suffled on to the game board area.
@@ -21,6 +22,10 @@ General outline of the game is like this -
 * If the selection is  incorrect, then two cards that has been selected will hide its image again.
 * Player can make move until the life (heart) reaches 0. 
 * If player founds all three target goal, then it levels up and game refreshes.
+
+Event Listeners will response to player's click on the card, and it will save player's selection as an array.
+Success match function will iterate through target list array and check if any of that target list contains player's selection. 
+As all 3 goals met as the winning condition, level up function gets invoked and new game set begins. 
 
 **Technologies Used:** _HTML, CSS, and JavaScript_
 
@@ -41,3 +46,4 @@ Once your try reaches 0, your game is over, and you can click 'Replay' button to
 ![replay](./img/replay.png)
 Let's see if you can make it to next level!
 ![levelup](./img/levelup.png)
+
