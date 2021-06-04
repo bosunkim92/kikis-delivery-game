@@ -111,13 +111,10 @@ startButton.addEventListener('click', function(e) {
 gameBoard.addEventListener('click', function(e){
 	if(e.target.className !== 'game-board'){
 		if(currentPlayerChoice.length < 2){
-			console.log(e.target);
-			console.log(e.target.firstElementChild);
 			e.target.firstElementChild.style.display = 'block';
 			currentPlayerChoiceGenerator(e.target);
 			if(currentPlayerChoice.length === 2){
 				successMatch();
-				console.log(`this is current length of matchedList ${matchedList.length}`);
 			}
 		} else {
 			return;
@@ -273,17 +270,13 @@ function successMatch() {
 			currentMatchedListIdx++;
 			for(elem of currentPlayerChoice){
 				let eachCard = document.querySelector(`.${elem}`);
-				console.log(eachCard);
 				eachCard.firstElementChild.style.boxShadow = '0px 0px 4px 6px rgba(0, 255, 98, 0.9)';
 			}
-			console.log(`you have delivered correct item to person!`);
-			console.log(`this is matched List ${matchedList}`);
 		} else if(!idvTargetList.includes(currentPlayerChoice[0]) || !idvTargetList.includes(currentPlayerChoice[1])){
 		}
 	}
 	//failed try handler:
 	if(successNumber === matchedList.length){
-		console.log('it is in the failure handler function');
 		setTimeout(function(){
 			chances--;
 			if (chances === 0){
@@ -323,7 +316,7 @@ function levelUp() {
 	successNumber = 0;
 	currentMatchedListIdx = 0;
 	matchedList = [];
-	alert(`You have successfully delivered all items to the neighbors! Now your level is ${level}`);
+	chances = 10;
 	init();
 }
 
