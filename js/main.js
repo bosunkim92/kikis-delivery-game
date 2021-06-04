@@ -144,6 +144,9 @@ function init() {
 	if(matchedList != ""){
 		matchedList = [];
 	}
+	if(currentMatchedListIdx != 0){
+		currentMatchedListIdx = 0;
+	}
 	targetGenerator();
 	shuffle(cardDeck);
 	render();
